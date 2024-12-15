@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+sqlalchemy
+databases
+pymysql
+pydantic
+psycopg2-binary
+hashlib                         
+shutil                      
+typing-extensions
+starlette
+jinja2
+passlib[bcrypt]  
+python-multipart

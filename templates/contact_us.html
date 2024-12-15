@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocationAuto - Contactez-nous</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* General Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4; /* Light Gray Background */
+            background: url('assets/images/about\ us\ .png') no-repeat center center fixed;
+            background-size: cover;
+            height: 100%;
+            
+        }
+
+        /* Navbar Styles */
+        .navbar-inverse {
+            background-color: #002B5B; /* Navy Blue Background */
+            border-color: #002B5B;
+        }
+        .navbar-inverse .navbar-brand, 
+        .navbar-inverse .navbar-nav>li>a {
+            color: #fff !important; /* White Text */
+        }
+        .navbar-inverse .navbar-brand:hover, 
+        .navbar-inverse .navbar-nav>li>a:hover {
+            color: #00AFFF !important; /* Light Blue Text on Hover */
+        }
+        .navbar-inverse .navbar-nav .active>a {
+            background-color: #004080 !important; /* Slightly Darker Navy Blue for Active Link */
+            color: #fff !important;
+        }
+        .navbar-inverse .navbar-toggle {
+            border-color: #fff;
+        }
+        .navbar-inverse .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+
+        /* Contact Us Section */
+        .contact-section {
+            padding: 40px 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        .contact-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .contact-section p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .contact-info {
+            margin-bottom: 20px;
+        }
+        .contact-info i {
+            margin-right: 10px;
+        }
+        .social-media a {
+            font-size: 24px;
+            color: #002B5B;
+            margin-right: 20px;
+            text-decoration: none;
+        }
+        .social-media a:hover {
+            color: #00AFFF;
+        }
+
+        /* Footer Section */
+        footer {
+            background: #002B5B; /* Navy Blue Background */
+            color: #fff;
+            text-align: center;
+            padding: 30px 0; /* Thicker Footer */
+        }
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        footer ul li {
+            display: inline;
+            margin-left: 10px;
+        }
+        footer ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px; /* Larger Font Size */
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#">LocationAuto</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="./">Accueil</a></li>
+                <li><a href="/car_listing">Voitures</a></li>
+                <li><a href="/reservation">Reservation</a></li>
+                <li><a href="/user_account">Compte utilisateur</a></li>
+                <li><a href="/dashboard">Tableau de bord admin</a></li>
+                <li class="active"><a href="/contact_us">Contactez-nous</a></li>
+                <li><a href="/about_us">À propos de nous</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.session.get("user") %}
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                {% else %}
+                    <li><a href="/sign_up"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container contact-section">
+    <h2>Contactez-nous</h2>
+    <p>Nous sommes ici pour vous aider. Contactez-nous par téléphone, par email ou via nos réseaux sociaux.</p>
+    
+    <div class="contact-info">
+        <p><i class="fa fa-phone"></i> <strong>Téléphone:</strong> +212-123-456-789</p>
+        <p><i class="fa fa-envelope"></i> <strong>Email:</strong> contact@locationauto.ma</p>
+    </div>
+
+    <div class="social-media">
+        <h3>Suivez-nous sur les réseaux sociaux</h3>
+        <a href="https://facebook.com" target="_blank" class="fa fa-facebook"></a>
+        <a href="https://twitter.com" target="_blank" class="fa fa-twitter"></a>
+        <a href="https://instagram.com" target="_blank" class="fa fa-instagram"></a>
+        <a href="https://linkedin.com" target="_blank" class="fa fa-linkedin"></a>
+    </div>
+
+    <div class="contact-form">
+        <h3>Envoyez-nous un message</h3>
+        <form>
+            <div class="form-group">
+                <label for="contactName">Nom</label>
+                <input type="text" class="form-control" id="contactName" placeholder="Entrez votre nom" required>
+            </div>
+            <div class="form-group">
+                <label for="contactEmail">Email</label>
+                <input type="email" class="form-control" id="contactEmail" placeholder="Entrez votre email" required>
+            </div>
+            <div class="form-group">
+                <label for="contactMessage">Message</label>
+                <textarea class="form-control" id="contactMessage" rows="5" placeholder="Entrez votre message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </div>
+</div>
+
+<!-- Footer Section -->
+<footer>
+    <div class="container">
+        <p>&copy; 2024 LocationAuto. Tous droits réservés.</p>
+        <ul>
+            <li><a href="#">Politique de confidentialité</a></li>
+            <li><a href="#">Conditions d'utilisation</a></li>
+        </ul>
+    </div>
+</footer>
+
+</body>
+</html>

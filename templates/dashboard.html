@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Gestion des Services de Location de Voitures</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        /* General Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: url('assets/images/rent.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        /* Ensure the content takes remaining space */
+        .content {
+            flex: 1 0 auto;
+            padding: 20px;
+        }
+
+        /* Navbar Styles */
+        .navbar-inverse {
+            background-color: #002B5B; /* Navy Blue Background */
+            border-color: #002B5B;
+        }
+        .navbar-inverse .navbar-brand, 
+        .navbar-inverse .navbar-nav>li>a {
+            color: #fff !important; /* White Text */
+        }
+        .navbar-inverse .navbar-brand:hover, 
+        .navbar-inverse .navbar-nav>li>a:hover {
+            color: #00AFFF !important; /* Light Blue Text on Hover */
+        }
+        .navbar-inverse .navbar-nav .active>a {
+            background-color: #004080 !important; /* Slightly Darker Navy Blue for Active Link */
+            color: #fff !important;
+        }
+        .navbar-inverse .navbar-toggle {
+            border-color: #fff;
+        }
+        .navbar-inverse .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            padding: 20px;
+        }
+        .dashboard h2 {
+            margin-bottom: 20px;
+        }
+        .dashboard .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        .dashboard .card h3 {
+            margin-top: 0;
+            font-size: 20px;
+        }
+        .dashboard .card p {
+            margin: 0;
+        }
+
+        /* Footer Section */
+        footer {
+            background: #002B5B; /* Navy Blue Background */
+            color: #fff;
+            text-align: center;
+            padding: 30px 0; /* Thicker Footer */
+            flex-shrink: 0; /* Prevent footer from shrinking */
+        }
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        footer ul li {
+            display: inline;
+            margin-left: 10px;
+        }
+        footer ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px; /* Larger Font Size */
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#">LocationAuto</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="./">Accueil</a></li>
+                <li><a href="/car_listing">Voitures</a></li>
+                <li><a href="/reservation">Reservation</a></li>
+                <li><a href="/user_account">Compte utilisateur</a></li>
+                <li class="active"><a href="/dashboard">Tableau de bord admin</a></li>
+                <li><a href="/contact_us">Contactez-nous</a></li>
+                <li><a href="/about_us">À propos de nous</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.session.get("user") %}
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                {% else %}
+                    <li><a href="/sign_up"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="content">
+    <div class="container dashboard">
+        <h2 style="
+        font-size: 40px; 
+        font-weight: 700; 
+        background-image: linear-gradient(to left, #000000, #696262);
+        color: transparent;
+        background-clip: text;
+        -webkit-background-clip: text;">Tableau de Bord - Gestion des Utilisateurs</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card" style="background: rgba(235, 253, 255, 0.3);">
+                    <h3>Gestion des Utilisateurs</h3>
+                    <p>Ajouter, modifier et supprimer des utilisateurs.</p>
+                    <button class="btn btn-primary" onclick="location.href='/gestion_utilisateurs'">Gérer les utilisateurs</button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="background: rgba(235, 253, 255, 0.3);">
+                    <h3>Gestion des Voitures</h3>
+                    <p>Ajouter, modifier et supprimer des Voitures.</p>
+                    <button class="btn btn-primary" onclick="location.href='/gestion_voitures'">Gérer les Voitures</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer Section -->
+<footer>
+    <div class="container">
+        <p>&copy; 2024 LocationAuto. Tous droits réservés.</p>
+        <ul>
+            <li><a href="#">Politique de confidentialité</a></li>
+            <li><a href="#">Conditions d'utilisation</a></li>
+        </ul>
+    </div>
+</footer>
+
+</body>
+</html>

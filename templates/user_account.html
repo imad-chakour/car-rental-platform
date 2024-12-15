@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocationAuto - Gestion du Profil Utilisateur</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    /* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+    background: url("assets/images/about\ us\ .png") no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Navbar Styles */
+.navbar-inverse {
+    background-color: #002B5B; /* Navy Blue Background */
+    border-color: #002B5B;
+}
+.navbar-inverse .navbar-brand, 
+.navbar-inverse .navbar-nav>li>a {
+    color: #fff !important; /* White Text */
+}
+.navbar-inverse .navbar-brand:hover, 
+.navbar-inverse .navbar-nav>li>a:hover {
+    color: #00AFFF !important; /* Light Blue Text on Hover */
+}
+.navbar-inverse .navbar-nav .active>a {
+    background-color: #004080 !important; /* Slightly Darker Navy Blue for Active Link */
+    color: #fff !important;
+}
+.navbar-inverse .navbar-toggle {
+    border-color: #fff;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+
+/* Profile Management Styles */
+.container {
+    padding: 20px;
+}
+.profile-section {
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    background: rgba(255, 255, 255, 0.3);
+    text-align: center; /* Center align text */
+}
+.profile-section h2 {
+    font-size: 32px; /* Increased font size */
+    margin-bottom: 20px;
+}
+.profile-info {
+    font-size: 18px; /* Larger font size */
+    line-height: 1.8; /* Increased line height for readability */
+}
+.profile-info .profile-pic-wrapper {
+    display: inline-block;
+    position: relative;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 3px solid #ddd;
+    transition: all 0.3s ease-in-out;
+}
+.profile-info .profile-pic-wrapper:hover {
+    transform: scale(1.1);
+    border-color: #007bff;
+}
+.profile-info .profile-pic-wrapper input[type="file"] {
+    display: none;
+}
+.profile-info .profile-pic-wrapper img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+.profile-info .profile-pic-wrapper .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.profile-info .profile-pic-wrapper:hover .overlay {
+    opacity: 1;
+}
+.profile-info .profile-pic-wrapper .overlay span {
+    font-size: 16px;
+}
+.form-group label {
+    font-size: 16px;
+}
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Footer Styles */
+footer {
+    background: #002B5B; /* Navy Blue Background */
+    color: #fff;
+    text-align: center;
+    padding: 10px 0; /* Increased padding for better spacing */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+footer ul li {
+    display: inline;
+    margin-left: 10px;
+}
+footer ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px; /* Larger Font Size */
+}
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                </button>
+                <a class="navbar-brand" href="#">LocationAuto</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="./">Accueil</a></li>
+                    <li><a href="/car_listing">Voitures</a></li>
+                    <li><a href="/reservation">Reservation</a></li>
+                    <li class="active"><a href="/user_account">Compte utilisateur</a></li>
+                    <li><a href="/dashboard">Tableau de bord admin</a></li>
+                    <li><a href="/contact_us">Contactez-nous</a></li>
+                    <li><a href="/about_us">À propos de nous</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if request.session.get("user") %}
+                        <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                    {% else %}
+                        <li><a href="/sign_up"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                        <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container profile-section">
+        <h2 style="
+            font-size: 40px; 
+            font-weight: 700; 
+            background-image: linear-gradient(to left, #000000, #696262);
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;">Gestion du Profil</h2>
+            
+        <div id="successMessage" class="text-success mt-3" style="display: none;">Update successful!</div>
+        <div id="errorMessage" class="text-danger mt-3" style="display: none;"></div>
+            
+        <div class="profile-info">
+            <div class="profile-pic-wrapper" onclick="document.getElementById('editProfilePic').click();">
+                <img src="{{ user.profile_pic_url }}" alt="Picture" id="profilePic">
+                <div class="overlay">
+                    <span>Modifier</span>
+                </div>
+                <input type="file" id="editProfilePic" accept="image/*" onchange="previewProfilePic(event)">
+            </div>
+            <p><strong>Nom:</strong> <span id="profileName">{{ user.name }}</span></p>
+            <p><strong>Prénom:</strong> <span id="profileLastname">{{ user.lastname }}</span></p>
+            <p><strong>Email:</strong> <span id="profileEmail">{{ user.email }}</span></p>
+            <button class="btn btn-primary" onclick="editProfile()">Modifier le profil</button>
+        </div>
+    
+        <div class="form-section" id="editProfileForm" style="display:none;">
+            <h2>Modifier le Profil</h2>
+            <form id="user_accountform" action="/user_account" method="POST" enctype="multipart/form-data">
+                <input type="file" class="form-control-file" name="editProfilePic" id="editProfilePic">
+                <div class="form-group">
+                    <label for="editName">Nom</label>
+                    <input type="text" class="form-control" name="editName" id="editName" value="{{ user.name }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="editLastname">Prénom</label>
+                    <input type="text" class="form-control" name="editLastname" id="editLastname" value="{{ user.lastname }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="editEmail">Email</label>
+                    <input type="email" class="form-control" name="editEmail" id="editEmail" value="{{ user.email }}" required>
+                </div>
+                <div class="form-group">
+                    <label for="editPassword">Nouveau Mot de passe</label>
+                    <input type="password" class="form-control" name="editPassword" id="editPassword" placeholder="Entrez votre nouveau mot de passe">
+                </div>
+                <button type="submit" class="btn btn-primary">Sauvegarder</button>
+            </form>
+        </div>
+    </div>
+   
+    <script>
+        
+            function toggleFormVisibility() {
+                var formSection = document.getElementById('editProfileForm');
+                var footer = document.querySelector('footer');
+                
+                // Toggle form visibility
+                if (formSection.style.display === 'none') {
+                    formSection.style.display = 'block';
+                } else {
+                    formSection.style.display = 'none';
+                }
+        
+                // Adjust footer position based on form visibility
+                if (formSection.style.display === 'block') {
+                    footer.style.position = 'relative';
+                } else {
+                    footer.style.position = 'absolute';
+                }
+            }
+        function previewProfilePic(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('profilePic');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    
+        function editProfile() {
+            document.querySelector('.profile-info').style.display = 'none';
+            document.getElementById('editProfileForm').style.display = 'block';
+        }
+    
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('message')) {
+                const message = params.get('message');
+                if (message) {
+                    const successMessageDiv = document.getElementById('successMessage');
+                    successMessageDiv.innerText = message;
+                    successMessageDiv.style.display = 'block';
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

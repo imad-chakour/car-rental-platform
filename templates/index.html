@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocationAuto - Accueil</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* General Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            width: 100%;
+            height: 100vh;
+            background: url('assets/images/one-way-rental.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        /* Navbar Styles */
+        .navbar-inverse {
+            background-color: #002B5B; /* Navy Blue Background */
+            border-color: #002B5B;
+        }
+        .navbar-inverse .navbar-brand, 
+        .navbar-inverse .navbar-nav>li>a {
+            color: #fff !important; /* White Text */
+        }
+        .navbar-inverse .navbar-brand:hover, 
+        .navbar-inverse .navbar-nav>li>a:hover {
+            color: #00AFFF !important; /* Light Blue Text on Hover */
+        }
+        .navbar-inverse .navbar-nav .active>a {
+            background-color: #004080 !important; /* Slightly Darker Navy Blue for Active Link */
+            color: #fff !important;
+        }
+        .navbar-inverse .navbar-toggle {
+            border-color: #fff;
+        }
+        .navbar-inverse .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+
+        /* Introduction Styles */
+        .introduction {
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px 0;
+    background: rgba(235, 253, 255, 0.3);
+    position: relative; /* Ensure a stacking context for z-index */
+}
+
+.introduction h1 {
+    font-size: 32px; /* Increase font size for title */
+    margin-top: 0;
+    color: #000000; /* Set text color to white */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for visibility */
+}
+
+.introduction p {
+    font-size: 18px; /* Increase font size for paragraph */
+    color: #000000; /* Set text color to white */
+     /* Add subtle text shadow */
+}
+
+        /* Search Form Styles */
+        .search-form {
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background: rgba(235, 253, 255, 0.3);
+            position: relative;
+        }
+        .search-form h2 {
+            font-size: 25px;
+            margin-bottom: 20px;
+            color: #000000; /* Set text color to white */
+    
+        }
+        .search-form .form-group {
+            margin-bottom: 15px;
+            color: #000000; /* Set text color to white */
+    
+        }
+        .search-form .btn-search {
+            background-color: #FFD700;
+            color: #333;
+            font-size: 16px;
+            border: none;
+            padding: 10px 20px;
+            
+        }
+        .search-form .btn-search:hover {
+            background-color: #FFC300;
+            color: #000000; /* Set text color to white */
+    
+        }
+
+        /* Fleet Section Styles */
+        .fleet-section {
+            background-color: #fff;
+            padding: 40px 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-radius: 5px;
+            background: rgba(235, 253, 255, 0.3);
+            position: relative;
+        }
+        .fleet-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #000000; /* Set text color to white */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for visibility */
+        }
+        .fleet-section p {
+            font-size: 16px;
+            margin-bottom: 40px;
+            color: #000000; /* Set text color to white */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for visibility */
+        }
+        .fleet-section .fleet-category {
+            margin-bottom: 20px;
+            color: #000000; /* Set text color to white */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for visibility */
+        }
+        .fleet-section .fleet-category img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            color: #000000; /* Set text color to white */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for visibility */
+        }
+        .fleet-section .fleet-category h3 {
+            font-size: 20px;
+            margin-top: 10px;
+            color: #000000; /* Set text color to white */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for visibility */
+        }
+        .fleet-section .fleet-category p {
+            font-size: 14px;
+            color: #000000; /* Set text color to white */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for visibility */
+        }
+        .fleet-section .fleet-category a {
+            color: #00AFFF;
+            text-decoration: none;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for visibility */
+        }
+        .fleet-section .fleet-category a:hover {
+            text-decoration: underline;
+            color: #000000; /* Set text color to white */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for visibility */
+        }
+
+
+        /* Footer Section */
+        footer {
+            background: #002B5B; /* Navy Blue Background */
+            color: #fff;
+            text-align: center;
+            padding: 30px 0; /* Thicker Footer */
+        }
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        footer ul li {
+            display: inline;
+            margin-left: 10px;
+        }
+        footer ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px; /* Larger Font Size */
+        }
+        .redirect-image {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.redirect-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#">LocationAuto</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Accueil</a></li>
+                <li><a href="/car_listing">Voitures</a></li>
+                <li><a href="/reservation">Réservation</a></li>
+                <li><a href="/user_account">Compte utilisateur</a></li>
+                <li><a href="/dashboard">Tableau de bord admin</a></li>
+                <li><a href="/contact_us">Contactez-nous</a></li>
+                <li><a href="/about_us">À propos de nous</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.session.get("user") %}
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                {% else %}
+                    <li><a href="/sign_up"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container introduction">
+    <h1>Bienvenue chez LocationAuto</h1>
+    <p>Nous offrons une large gamme de véhicules à louer pour répondre à tous vos besoins. Que vous cherchiez une petite voiture économique ou un SUV spacieux, nous avons ce qu'il vous faut. Explorez notre site pour en savoir plus sur nos services et réserver votre voiture dès aujourd'hui.</p>
+</div>
+
+<div class="container search-form">
+    <h2>Rechercher une Voiture</h2>
+    {% if error_message %}
+        <div class="alert alert-danger" role="alert">
+            {{ error_message }}
+        </div>
+    {% endif %}
+    <form action="/search" method="post">
+        <div class="form-group">
+            <label for="vehicleType">Permis de conduire depuis 2 ans ?</label>
+            <div>
+                <label class="radio-inline">
+                    <input type="radio" name="vehicle_type" value="Oui" checked> Oui
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="vehicle_type" value="Non"> Non
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pickupLocation">Lieu de prise en charge et de retour</label>
+            <input type="text" class="form-control" name="city" placeholder="Lieu de prise en charge et de retour">
+            <label class="checkbox-inline">
+                <input type="checkbox" name="same_return_location" checked> Même lieu de retour
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="pickupDate">Date et heure de prise en charge</label>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="date" class="form-control" name="dateDebut" required>
+                </div>
+                <div class="col-md-6">
+                    <input type="time" class="form-control" name="pickup_time">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="returnDate">Date et heure de retour</label>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="date" class="form-control" name="dateFin" required>
+                </div>
+                <div class="col-md-6">
+                    <input type="time" class="form-control" name="return_time">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="country">Je loue à</label>
+            <select class="form-control" name="lieu" required>
+                <option value="">Sélectionnez un lieu</option>
+                <option value="Casablanca">Casablanca</option>
+                <option value="Rabat">Rabat</option>
+                <option value="Tanger">Tanger</option>
+                <option value="Fès">Fès</option>
+                <option value="Essaouira">Essaouira</option>
+                <option value="Marrakech">Marrakech</option>
+                <option value="Agadir">Agadir</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-search">Rechercher</button>
+    </form>
+</div>
+
+<div class="container fleet-section">
+    <h2>Explorez Notre Flotte de Véhicules</h2>
+    <p>Nous offrons une variété de véhicules pour répondre à tous vos besoins de déplacement. Découvrez notre sélection ci-dessous :</p>
+    <div class="row">
+        <div class="col-md-4 fleet-category">
+            <img src="assets/images/png/economy car.png" alt="Voiture Economique" class="redirect-image">
+            <h3>Voitures Économiques</h3>
+            <p>Découvrez notre gamme de voitures économiques, idéales pour les déplacements urbains.</p>
+        </div>
+        <div class="col-md-4 fleet-category">
+            <img src="assets/images/png/familiale.png" alt="Voiture Familiale" class="redirect-image">
+            <h3>Voitures Familiales</h3>
+            <p>Spacieuses et confortables, nos voitures familiales sont parfaites pour les longs trajets en famille.</p>
+        </div>
+        <div class="col-md-4 fleet-category">
+            <img src="assets/images/png/Luxury-Car-PNG-Image-HD.png" alt="Voiture de Luxe" class="redirect-image">
+            <h3>Voitures de Luxe</h3>
+            <p>Optez pour le luxe avec nos voitures haut de gamme, idéales pour des occasions spéciales.</p>
+        </div>
+    </div>
+</div>
+
+
+<footer>
+    <div class="container">
+        <ul class="list-inline">
+            <li><a href="/privacy_policy">Politique de Confidentialité</a></li>
+            <li><a href="/terms_of_service">Conditions d'Utilisation</a></li>
+            <li><a href="/contact_us">Contactez-nous</a></li>
+        </ul>
+        <p>&copy; 2024 LocationAuto. Tous droits réservés.</p>
+    </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Get all images with the class 'redirect-image'
+    const images = document.querySelectorAll(".redirect-image");
+
+    // Add click event listener to each image
+    images.forEach(function(image) {
+        image.addEventListener("click", function() {
+            window.location.href = "/car_listing";
+        });
+    });
+
+    // Remove all 'Voir Plus' links
+    const links = document.querySelectorAll(".fleet-category a");
+    links.forEach(function(link) {
+        link.remove();
+    });
+});
+</script>
+</body>
+</html>

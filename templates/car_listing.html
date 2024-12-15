@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocationAuto - Liste des Voitures</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* General Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4; /* Light Gray Background */
+            background: url('assets/images/about\ us\ .png') no-repeat center center fixed;
+            background-size: cover;
+            height: 100%;
+        }
+        /* Navbar Styles */
+        .navbar-inverse {
+            background-color: #002B5B; /* Navy Blue Background */
+            border-color: #002B5B;
+        }
+        .navbar-inverse .navbar-brand, 
+        .navbar-inverse .navbar-nav>li>a {
+            color: #fff !important; /* White Text */
+        }
+        .navbar-inverse .navbar-brand:hover, 
+        .navbar-inverse .navbar-nav>li>a:hover {
+            color: #00AFFF !important; /* Light Blue Text on Hover */
+        }
+        .navbar-inverse .navbar-nav .active>a {
+            background-color: #004080 !important; /* Slightly Darker Navy Blue for Active Link */
+            color: #fff !important;
+        }
+        .navbar-inverse .navbar-toggle {
+            border-color: #fff;
+        }
+        .navbar-inverse .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+
+        /* Car Listing Styles */
+        .car-listing {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            text-align: center; /* Center text alignment */
+            background: rgba(235, 253, 255, 0.3);
+    position: relative;
+        }
+        .car-listing img {
+            max-width: 100%;
+            height: 150px; /* Fixed height */
+            object-fit: contain; /* Ensure image fits within the fixed height */
+            border-radius: 5px;
+        }
+        
+        .car-listing h4 {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #000000; /* Set text color to white */
+            
+        }
+        .car-listing p {
+            font-size: 14px;
+            color: #666;
+            
+        }
+        .car-listing .btn-view-deal {
+            background-color: #FF4500;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            display: block;
+            text-align: center;
+            text-decoration: none; /* Remove underline from link */
+        }
+        .car-listing .btn-view-deal:hover {
+            background-color: #FF6347;
+        }
+
+        /* Filter Sidebar Styles */
+        .filter-sidebar {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            position: absolute;
+            top: 120px;
+            background: rgba(235, 253, 255, 0.3);
+        }
+        .filter-sidebar h4 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .container {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+        footer {
+    background: #002B5B; /* Navy Blue Background */
+    color: #fff;
+    text-align: center;
+    padding: 30px 0; /* Thicker Footer */
+    margin-top: auto; /* Push footer to the bottom */
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer ul li {
+    display: inline;
+    margin-left: 10px;
+}
+
+footer ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px; /* Larger Font Size */
+}
+.redirect-image {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.redirect-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+        .btn-search {
+            background-color: #FFD700;
+            color: #333;
+            font-size: 16px;
+            border: none;
+            padding: 10px 20px;
+            
+        }
+        .btn-search:hover {
+            background-color: #FFC300;
+            color: #000000; /* Set text color to white */
+    
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#">LocationAuto</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Accueil</a></li>
+                <li class="active"><a href="/car_listing">Voitures</a></li>
+                <li><a href="/reservation">Reservation</a></li>
+                <li><a href="/user_account">Compte utilisateur</a></li>
+                <li><a href="/dashboard">Tableau de bord admin</a></li>
+                <li><a href="/contact_us">Contactez-nous</a></li>
+                <li><a href="/about_us">À propos de nous</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.session.get("user") %}
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                {% else %}
+                    <li><a href="/sign_up"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container reservation-page" id="carListings">
+    <div class="row">
+        <!-- Filter Sidebar -->
+        <div class="col-md-3">
+            <div class="filter-sidebar">
+                {% if dateDebut and dateFin and lieu %}
+                <div class="search-details">
+                <p style="font-weight: bold;">Date de début: {{ dateDebut }}</p>
+                <p style="font-weight: bold;">Date de fin: {{ dateFin }}</p>
+                <p style="font-weight: bold;">Lieu: {{ lieu }}</p>
+                <a href="/" class="btn btn-search">Changer la date</a>
+            </div>
+            {% endif %}
+                <form id="filterForm">
+                    <div class="form-group">
+                        <label for="carType">Type de voiture</label>
+                        <select class="form-control" id="carType">
+                            <option value="">Tous</option>
+                            <option value="économie">Économie</option>
+                            <option value="suv">SUV</option>
+                            <option value="voiture de luxe">Voiture de luxe</option>
+                            <option value="voiture familiale">Voiture familiale</option>
+                            <option value="cabriolet">Cabriolet</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="priceRange">Tranche de prix</label>
+                        <select class="form-control" id="priceRange">
+                            <option value="">Tous</option>
+                            <option value="50">Moins de $50</option>
+                            <option value="100">$50 - $100</option>
+                            <option value="150">$100 - $150</option>
+                            <option value="151">Plus de $150</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="passengerCapacity">Capacité de passagers</label>
+                        <select class="form-control" id="passengerCapacity">
+                            <option value="">Tous</option>
+                            <option value="2">2 adultes</option>
+                            <option value="4">4 adultes</option>
+                            <option value="5">5 adultes</option>
+                        </select>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="filterCars()">Filtrer</button>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Car Listings -->
+        <div class="col-md-9">
+            <h2  style="
+            font-size: 40px; 
+            font-weight: 700; 
+            background-image: linear-gradient(to left, #000000, #3b3737);
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;">Liste des Voitures</h2>
+            <div class="row">
+                <!-- Economy Car -->
+                <div class="col-md-4">
+                    <div class="car-listing">
+                        <img src="./assets/images/png/economy car.png" alt="Economy Car" class="redirect-image">
+                        <h4>$9/jour - Économie</h4>
+                        <p>2 adultes, 2 bagages</p>
+                        <a href="/voiture_economy_detail?v_id=1" class="btn btn-view-deal">Voir l'offre</a>
+                    </div>
+                </div>
+                <!-- SUV -->
+                <div class="col-md-4">
+                    <div class="car-listing">
+                        <img src="./assets/images/png/SUV-PNG-Image-HD.png" alt="SUV" class="redirect-image">
+                        <h4>$147/jour - SUV</h4>
+                        <p>2 adultes, 2 bagages</p>
+                        <a href="/SUV_detail?v_id=2" class="btn btn-view-deal">Voir l'offre</a>
+                    </div>
+                </div>
+                <!-- Luxury Car -->
+                <div class="col-md-4">
+                    <div class="car-listing">
+                        <img src="./assets/images/png/Luxury-Car-PNG-Image-HD.png" alt="Luxury Car" class="redirect-image">
+                        <h4>$150/jour - Voiture de luxe</h4>
+                        <p>5 adultes, 2 bagages</p>
+                        <a href="/voiture_de_luxe?v_id=3" class="btn btn-view-deal">Voir l'offre</a>
+                    </div>
+                </div>
+                <!-- Family Car -->
+                <div class="col-md-4">
+                    <div class="car-listing">
+                        <img src="./assets/images/png/familiale.png" alt="Family Car" class="redirect-image">
+                        <h4>$26/jour - Voiture familiale</h4>
+                        <p>5 adultes, 3 bagages</p>
+                        <a href="/family_detail?v_id=4" class="btn btn-view-deal">Voir l'offre</a>
+                    </div>
+                </div>
+                <!-- Convertible -->
+                <div class="col-md-4">
+                    <div class="car-listing">
+                        <img src="./assets/images/png/Convertible-Car-PNG-Free-Download.png" alt="Convertible" class="redirect-image">
+                        <h4>$200/jour - Cabriolet</h4>
+                        <p>4 adultes, 2 bagages</p>
+                        <a href="/convertible_detail?v_id=5" class="btn btn-view-deal">Voir l'offre</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer Section -->
+<footer>
+    <div class="container">
+        <p>&copy; 2024 LocationAuto. Tous droits réservés.</p>
+        <ul>
+            <li><a href="#">Politique de confidentialité</a></li>
+            <li><a href="#">Conditions d'utilisation</a></li>
+        </ul>
+    </div>
+</footer>
+
+<script>
+    function filterCars() {
+        var carType = document.getElementById('carType').value.toLowerCase();
+        var priceRange = document.getElementById('priceRange').value;
+        var passengerCapacity = document.getElementById('passengerCapacity').value;
+
+        var carListings = document.querySelectorAll('#carListings .car-listing');
+
+        carListings.forEach(function(car) {
+            var carDataType = car.querySelector('h4').innerText.split(' - ')[1].toLowerCase();
+            var carDataPrice = parseInt(car.querySelector('h4').innerText.split('/jour')[0].replace('$', ''));
+            var carDataCapacity = car.querySelector('p').innerText.split(' ')[0];
+
+            var typeMatch = (carType === "" || carDataType.includes(carType));
+            var priceMatch = (priceRange === "" ||
+                              (priceRange === "50" && carDataPrice < 50) ||
+                              (priceRange === "100" && carDataPrice >= 50 && carDataPrice <= 100) ||
+                              (priceRange === "150" && carDataPrice > 100 && carDataPrice <= 150) ||
+                              (priceRange === "151" && carDataPrice > 150));
+            var capacityMatch = (passengerCapacity === "" || carDataCapacity === passengerCapacity);
+
+            if (typeMatch && priceMatch && capacityMatch) {
+                car.style.display = "block";
+            } else {
+                car.style.display = "none";
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

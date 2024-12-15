@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocationAuto - À propos de nous</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* General Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4; /* Light Gray Background */
+        }
+
+        /* Navbar Styles */
+        .navbar-inverse {
+            background-color: #002B5B; /* Navy Blue Background */
+            border-color: #002B5B;
+        }
+        .navbar-inverse .navbar-brand, 
+        .navbar-inverse .navbar-nav>li>a {
+            color: #fff !important; /* White Text */
+        }
+        .navbar-inverse .navbar-brand:hover, 
+        .navbar-inverse .navbar-nav>li>a:hover {
+            color: #00AFFF !important; /* Light Blue Text on Hover */
+        }
+        .navbar-inverse .navbar-nav .active>a {
+            background-color: #004080 !important; /* Slightly Darker Navy Blue for Active Link */
+            color: #fff !important;
+        }
+        .navbar-inverse .navbar-toggle {
+            border-color: #fff;
+        }
+        .navbar-inverse .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+
+        /* About Us Section */
+        .about-us {
+            padding: 40px 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center; /* Center the text */
+        }
+        .about-us h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        .about-us p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .about-us img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer Section */
+        footer {
+            background: #002B5B; /* Navy Blue Background */
+            color: #fff;
+            text-align: center;
+            padding: 30px 0; /* Thicker Footer */
+        }
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        footer ul li {
+            display: inline;
+            margin-left: 10px;
+        }
+        footer ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px; /* Larger Font Size */
+        }
+        
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#">LocationAuto</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="./">Accueil</a></li>
+                <li><a href="/car_listing">Voitures</a></li>
+                <li><a href="/reservation">Réservation</a></li>
+                <li><a href="/user_account">Compte utilisateur</a></li>
+                <li><a href="/dashboard">Tableau de bord admin</a></li>
+                <li><a href="/contact_us">Contactez-nous</a></li>
+                <li class="active"><a href="about-us.html">À propos de nous</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.session.get("user") %}
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                {% else %}
+                    <li><a href="/sign_up"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container about-us">
+    <h2>À propos de nous</h2>
+    <p>Bienvenue chez LocationAuto, votre destination de confiance pour la location de voitures. 
+        Depuis notre fondation, nous nous sommes engagés à offrir des services de location de voitures de qualité supérieure, 
+        avec une large gamme de véhicules pour répondre à tous vos besoins.</p>
+    <img src="assets/images/about us .png" alt="About Us" class="redirect-image">
+    <p>Nous croyons en l'importance de fournir un excellent service client et des voitures bien entretenues à des prix compétitifs. 
+        Que vous ayez besoin d'une voiture pour un voyage d'affaires, des vacances en famille ou une simple escapade de week-end, 
+        nous avons le véhicule parfait pour vous.</p>
+    <p>Notre équipe est composée de professionnels expérimentés et passionnés par leur travail. 
+        Nous sommes toujours prêts à vous aider et à rendre votre expérience de location de voiture aussi agréable et sans stress que possible.</p>
+    <p>À LocationAuto, nous sommes fiers de notre réputation et de notre engagement à offrir un service de qualité supérieure à nos clients. Nous sommes convaincus que vous serez satisfaits de votre expérience avec nous et que vous reviendrez pour répéter votre expérience avec nous.</p>
+</div>
+
+<!-- Footer Section -->
+<footer>
+    <div class="container">
+        <p>&copy; 2024 LocationAuto. Tous droits réservés.</p>
+        <ul>
+            <li><a href="#">Politique de confidentialité</a></li>
+            <li><a href="#">Conditions d'utilisation</a></li>
+        </ul>
+    </div>
+</footer>
+</body>
+</html>

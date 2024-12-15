@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocationAuto - Confirmation de Réservation</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: url('assets/images/rent.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Ensure the content takes remaining space */
+body {
+    flex: 1 0 auto;
+}
+
+/* Navbar Styles */
+.navbar-inverse {
+    background-color: #002B5B; /* Navy Blue Background */
+    border-color: #002B5B;
+}
+.navbar-inverse .navbar-brand, 
+.navbar-inverse .navbar-nav>li>a {
+    color: #fff !important; /* White Text */
+}
+.navbar-inverse .navbar-brand:hover, 
+.navbar-inverse .navbar-nav>li>a:hover {
+    color: #00AFFF !important; /* Light Blue Text on Hover */
+}
+.navbar-inverse .navbar-nav .active>a {
+    background-color: #004080 !important; /* Slightly Darker Navy Blue for Active Link */
+    color: #fff !important;
+}
+.navbar-inverse .navbar-toggle {
+    border-color: #fff;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+
+/* Confirmation Styles */
+.container {
+    padding: 20px;
+    flex: 1; /* Ensure container takes remaining space */
+    display: flex;
+    justify-content: center; /* Center align content vertically */
+    align-items: center; /* Center align content horizontally */
+}
+
+.confirmation-container {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center; /* Center align text */
+    max-width: 600px; /* Limit width of content */
+}
+
+.confirmation-container h2 {
+    color: #002B5B; /* Navy Blue */
+}
+
+.confirmation-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.confirmation-container ul li {
+    margin-bottom: 10px;
+}
+
+.confirmation-container .btn {
+    margin-top: 20px;
+}
+
+/* Footer Section */
+footer {
+    background: #002B5B; /* Navy Blue Background */
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer ul li {
+    display: inline;
+    margin-left: 10px;
+}
+
+footer ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px; /* Larger Font Size */
+}
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#">LocationAuto</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="./">Accueil</a></li>
+                <li><a href="/car_listing">Voitures</a></li>
+                <li class="active"><a href="/reservation">Reservation</a></li>
+                <li><a href="/user_account">Compte utilisateur</a></li>
+                <li><a href="/dashboard">Tableau de bord admin</a></li>
+                <li><a href="/contact_us">Contactez-nous</a></li>
+                <li><a href="/about_us">À propos de nous</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.session.get("user") %}
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                {% else %}
+                    <li><a href="/sign_up"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="confirmation-container">
+        <h2>Confirmation de Réservation</h2>
+        <p>Merci pour votre réservation ! Voici les détails :</p>
+        <ul>
+            <li>Date de début : {{ reservation.dateDebut }}</li>
+            <li>Date de fin : {{ reservation.dateFin }}</li>
+            <li>Lieu : {{ reservation.lieu }}</li>
+            <li>Numéro de réservation : {{ reservation.r_id }}</li>
+        </ul>
+        <a href="/car_listing" class="btn btn-primary">Faire une nouvelle réservation</a>
+        <a href="/reservation" class="btn btn-primary">Voir la liste des réservations</a>
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2024 LocationAuto. Tous droits réservés.</p>
+        <ul>
+            <li><a href="#">Politique de confidentialité</a></li>
+            <li><a href="#">Conditions d'utilisation</a></li>
+        </ul>
+    </div>
+</footer>
+
+</body>
+</html>

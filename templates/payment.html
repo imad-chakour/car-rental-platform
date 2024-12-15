@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocationAuto - Paiement</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            background: url('assets/images/rent.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .navbar-inverse {
+            background-color: #002B5B;
+            border-color: #002B5B;
+        }
+        .navbar-inverse .navbar-brand, 
+        .navbar-inverse .navbar-nav>li>a {
+            color: #fff !important;
+        }
+        .navbar-inverse .navbar-brand:hover, 
+        .navbar-inverse .navbar-nav>li>a:hover {
+            color: #00AFFF !important;
+        }
+        .navbar-inverse .navbar-nav .active>a {
+            background-color: #004080 !important;
+            color: #fff !important;
+        }
+        .navbar-inverse .navbar-toggle {
+            border-color: #fff;
+        }
+        .navbar-inverse .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+        .payment-form {
+            padding: 20px;
+            background-color: aliceblue;
+            border-radius: 5px;
+            margin: 20px auto;
+            width: 50%;
+            border: 1px solid #ddd;
+        }
+        .payment-form h2 {
+            font-size: 24px;
+            margin-top: 0;
+        }
+        .payment-form .form-group {
+            margin-bottom: 20px;
+        }
+        .payment-form .btn-submit {
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            padding: 10px 20px;
+            display: block;
+            width: 100%;
+        }
+        .payment-form .btn-submit:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background: #002B5B;
+            color: #fff;
+            text-align: center;
+            padding: 30px 0;
+        }
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        footer ul li {
+            display: inline;
+            margin-left: 10px;
+        }
+        footer ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>                        
+            </button>
+            <a class="navbar-brand" href="#">LocationAuto</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="./">Accueil</a></li>
+                <li><a href="/car_listing">Voitures</a></li>
+                <li class="active"><a href="/reservation">Reservation</a></li>
+                <li><a href="/user_account">Compte utilisateur</a></li>
+                <li><a href="/dashboard">Tableau de bord admin</a></li>
+                <li><a href="/contact_us">Contactez-nous</a></li>
+                <li><a href="/about_us">À propos de nous</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.session.get("user") %}
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                {% else %}
+                    <li><a href="/sign_up"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container payment-form">
+    <h2 style="
+    font-size: 40px; 
+    font-weight: 700; 
+    background-image: linear-gradient(to left, #000000, #696262);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;">Détails de Paiement</h2>
+    {% if error_message %}
+    <div class="alert alert-danger" role="alert">
+        {{ error_message }}
+    </div>
+    {% endif %}
+
+    <form action="/payment" method="post">
+        <div class="form-group">
+            <label for="cardNumber">Numéro de Carte</label>
+            <input type="text" class="form-control" id="cardNumber" name="cardNumber" required>
+        </div>
+        <div class="form-group">
+            <label for="cardExpiry">Date d'Expiration</label>
+            <input type="text" class="form-control" id="cardExpiry" name="cardExpiry" required>
+        </div>
+        <div class="form-group">
+            <label for="cardCVC">CVC</label>
+            <input type="text" class="form-control" id="cardCVC" name="cardCVC" required>
+        </div>
+        <div class="form-group">
+            <label for="name">Nom sur la Carte</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <input type="hidden" name="v_id" value="{{ request.query_params.get('v_id') }}">
+        <button type="submit" class="btn btn-primary btn-lg btn-submit">Payer</button>
+    </form>
+</div>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2024 LocationAuto. Tous droits réservés.</p>
+        <ul>
+            <li><a href="#">Politique de confidentialité</a></li>
+            <li><a href="#">Conditions d'utilisation</a></li>
+        </ul>
+    </div>
+</footer>
+
+</body>
+</html>

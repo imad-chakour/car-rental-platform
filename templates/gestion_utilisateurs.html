@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Utilisateurs</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #f4f4f4; /* Light Gray Background */
+            background: url('assets/images/one-way-rental.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100%;
+            
+        }
+        .container {
+            margin-top: 20px;
+            background: #ebfdfd; /* Set a solid background color */
+            position: relative;
+            padding: 20px; /* Add some padding */
+            border-radius: 8px; /* Optional: Add rounded corners */
+        }
+        .table thead th {
+            background-color: #002B5B;
+            color: #fff;
+        }
+        .modal-header {
+            background-color: #002B5B;
+            color: #fff;
+        }
+        .navbar-inverse {
+            background-color: #002B5B; 
+            border-color: #002B5B;
+        }
+        .navbar-inverse .navbar-brand, 
+        .navbar-inverse .navbar-nav>li>a {
+            color: #fff !important; 
+        }
+        .navbar-inverse .navbar-brand:hover, 
+        .navbar-inverse .navbar-nav>li>a:hover {
+            color: #00AFFF !important;
+        }
+        .navbar-inverse .navbar-nav .active>a {
+            background-color: #004080 !important;
+            color: #fff !important;
+        }
+        .navbar-inverse .navbar-toggle {
+            border-color: #fff;
+        }
+        .navbar-inverse .navbar-toggle .icon-bar {
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                        
+                </button>
+                <a class="navbar-brand" href="#">LocationAuto</a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="./">Accueil</a></li>
+                    <li><a href="/car_listing">Voitures</a></li>
+                    <li class="active"><a href="/reservation">Reservation</a></li>
+                    <li><a href="/user_account">Compte utilisateur</a></li>
+                    <li><a href="/dashboard">Tableau de bord admin</a></li>
+                    <li><a href="/contact_us">Contactez-nous</a></li>
+                    <li><a href="/about_us">À propos de nous</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if request.session.get("user") %}
+                        <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
+                    {% else %}
+                        <li><a href="/sign_up"><span class="glyphicon glyphicon-user"></span> Inscription</a></li>
+                        <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+<div class="container">
+    <h2 style="
+    font-size: 40px; 
+    font-weight: 700; 
+    background-image: linear-gradient(to left, #000000, #696262);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;">Gestion des Utilisateurs</h2>
+    <button class="btn btn-success" data-toggle="modal" data-target="#addUserModal">Ajouter un Utilisateur</button>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody">
+            <!-- Les données des utilisateurs seront insérées ici -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal Ajouter Utilisateur -->
+<div id="addUserModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Contenu du modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Ajouter un Utilisateur</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm" action="/add_user" method="POST">
+                    <div class="form-group">
+                        <label for="userName">Nom:</label>
+                        <input type="text" class="form-control" id="userName" name="name" placeholder="Entrer le nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userLastname">Prénom:</label>
+                        <input type="text" class="form-control" id="userLastname" name="lastname" placeholder="Entrer le prénom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">Email:</label>
+                        <input type="email" class="form-control" id="userEmail" name="email" placeholder="Entrer l'email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userPassword">Mot de passe:</label>
+                        <input type="password" class="form-control" id="userPassword" name="password" placeholder="Entrer le mot de passe" required>
+                    </div>
+                    <button type="submit" class="btn btn-success">Ajouter Utilisateur</button>
+                </form>
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    // Fonction pour afficher les utilisateurs dans le tableau
+    async function displayUsers() {
+        const response = await fetch('/api/users');
+        const users = await response.json();
+        const userTableBody = document.getElementById('userTableBody');
+        userTableBody.innerHTML = '';
+        users.forEach(user => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${user.id}</td>
+                <td>${user.name}</td>
+                <td>${user.email}</td>
+                <td>
+                    <button class="btn btn-danger" onclick="deleteUser(${user.id})">Supprimer</button>
+                </td>
+            `;
+            userTableBody.appendChild(tr);
+        });
+    }
+    // Fonction pour supprimer un utilisateur
+    async function deleteUser(userId) {
+        const response = await fetch(`/api/users/${userId}`, {
+            method: 'DELETE'
+        });
+        
+        if (response.ok) {
+            displayUsers();
+        } else {
+            alert('Erreur lors de la suppression de l\'utilisateur');
+        }
+    }
+
+    // Afficher les utilisateurs au chargement de la page
+    document.addEventListener('DOMContentLoaded', function() {
+        displayUsers();
+    });
+</script>
+
+</body>
+</html>
