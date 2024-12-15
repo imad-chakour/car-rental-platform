@@ -44,7 +44,7 @@ To run the platform locally, follow these instructions:
     uvicorn main:app --reload
 Visit the platform at http://127.0.0.1:8000.
 
-Endpoints
+## Endpoints
   GET /cars: Retrieve a list of available cars.
   POST /reserve: Make a reservation.
   POST /login: Log in as a user.
@@ -53,14 +53,14 @@ Endpoints
   Contributing
   We welcome contributions! To contribute:
 
-Fork the repository.
+## Fork the repository.
   Create a new branch (git checkout -b feature-branch).
   Make your changes.
   Commit your changes (git commit -am 'Add new feature').
   Push to your branch (git push origin feature-branch).
   Open a Pull Request.
 
-Acknowledgements
+## Acknowledgements
   FastAPI for its speed and simplicity in building APIs.
   SQLAlchemy for the ORM functionality.
   PostgreSQL for providing a robust relational database.
