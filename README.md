@@ -1,76 +1,68 @@
-# car-rental-platform
-Car Rental Platform
-This is a web application built with FastAPI that allows users to rent cars for easier travel. The platform allows users to browse available cars, make reservations, and process payments. Administrators can manage users, reservations, and payments through a user-friendly interface.
+# Car Rental Platform
 
-Features
-User Authentication: Users can sign up, log in, and manage their profiles.
-Car Listings: Users can view available cars for rent, including details like model, price, and availability.
-Reservation System: Users can select a car, provide rental dates, and make reservations.
-Payment Integration: Users can make payments for their reservations through integrated payment gateways.
-Admin Dashboard: Admins can manage users, car listings, and reservations.
-Technologies Used
-FastAPI: Web framework for building APIs.
-SQLAlchemy: ORM for database management.
-PostgreSQL: Database used to store user, car, and reservation data.
-Jinja2: Templating engine for rendering HTML views.
-Bootstrap: Front-end framework for responsive design.
-Installation
-To run this application locally, follow these steps:
+Welcome to the **Car Rental Platform** built with **FastAPI**. This platform allows users to rent cars conveniently, view available vehicles, make reservations, and handle payments. The admin interface allows managing users, reservations, and car listings.
 
-Clone the repository:
+## Features
 
-bash
-Copy code
-git clone https://github.com/yourusername/car-rental-platform.git
-cd car-rental-platform
-Create a virtual environment:
+- **User Authentication**: Sign up, log in, and manage user profiles.
+- **Car Listings**: Browse available cars with details such as model, price, and availability.
+- **Reservation System**: Make car reservations by selecting rental dates and car preferences.
+- **Payment Integration**: Process payments for reservations.
+- **Admin Dashboard**: Manage car listings, users, and reservations from the admin interface.
 
-bash
-Copy code
-python -m venv venv
-Activate the virtual environment:
+## Technologies Used
 
-On Windows:
-bash
-Copy code
-venv\Scripts\activate
-On macOS/Linux:
-bash
-Copy code
-source venv/bin/activate
-Install the required dependencies:
+- **Backend**: FastAPI, SQLAlchemy
+- **Database**: PostgreSQL
+- **Frontend**: HTML, Bootstrap, Jinja2 templates
+- **Environment**: Python, Uvicorn
 
-bash
-Copy code
-pip install -r requirements.txt
-Set up the database:
+## Installation
 
-Create a PostgreSQL database and configure the connection details in the .env file.
-Run the application:
+To run the platform locally, follow these instructions:
 
-bash
-Copy code
-uvicorn main:app --reload
-The application will be available at http://127.0.0.1:8000.
+### 1. Clone the repository
+  ```bash
+  git clone https://github.com/imad-chakour/car-rental-platform.git
+  cd car-rental-platform
 
-Environment Variables
-The application requires the following environment variables to be set:
+2. Set up the virtual environment
+  On Windows:
+    python -m venv venv
+    venv\Scripts\activate
 
-DATABASE_URL: The URL for the PostgreSQL database.
-SECRET_KEY: A secret key used for security purposes (e.g., session management).
-DEBUG: Set to True for development and False for production.
-Contributing
-We welcome contributions! If you find a bug or want to add a feature, please fork the repository and submit a pull request. Here's how you can contribute:
+3. Install dependencies
+    pip install -r requirements.txt
+
+4. Configure the environment
+    Create a .env file in the project root and configure the following environment variables:
+      DATABASE_URL=postgresql://user:password@localhost/dbname
+      SECRET_KEY=your-secret-key
+      DEBUG=True
+
+5. Run the application
+    uvicorn main:app --reload
+Visit the platform at http://127.0.0.1:8000.
+
+Endpoints
+  GET /cars: Retrieve a list of available cars.
+  POST /reserve: Make a reservation.
+  POST /login: Log in as a user.
+  POST /signup: Register a new user.
+  GET /admin: Admin dashboard for managing users and reservations.
+  Contributing
+  We welcome contributions! To contribute:
 
 Fork the repository.
-Create a new branch (git checkout -b feature-name).
-Make your changes.
-Commit your changes (git commit -am 'Add new feature').
-Push to your forked repository (git push origin feature-name).
-Create a pull request.
-License
-This project is licensed under the MIT License.
+  Create a new branch (git checkout -b feature-branch).
+  Make your changes.
+  Commit your changes (git commit -am 'Add new feature').
+  Push to your branch (git push origin feature-branch).
+  Open a Pull Request.
 
-Additional Notes
-Future Features: The platform may include features like user reviews, car ratings, and mobile app integration in the future.
-Security: Make sure to handle sensitive data (like passwords) securely using techniques such as password hashing and validation.
+Acknowledgements
+  FastAPI for its speed and simplicity in building APIs.
+  SQLAlchemy for the ORM functionality.
+  PostgreSQL for providing a robust relational database.
+  Bootstrap for frontend styling.
+  Uvicorn for serving the FastAPI app.
